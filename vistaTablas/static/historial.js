@@ -20,14 +20,14 @@ $(document).ready(function () {
         },
         columns: [
             { data: "primarykey", visible: false },
-
-            {
-                data: null, // Utiliza null como marcador para la nueva columna
-                render: function (data, type, row) {
-                    // En esta función, puedes construir el contenido de la celda de "Borrar Registro"
-                    return '<button class="btn btn-danger" type="button" onclick="borrarRegistro(\'' + row.primarykey + '\')">Borrar</button>';
-                }
-            },
+            { data: "id" },
+            { data: "id_empresa" },
+            { data: "Cargadora" },
+            { data: "id_dispositivo" },
+            { data: "id_parametro" },
+            { data: "valor_parametro" },
+            { data: "fh_lecturamaquina" },
+            { data: "fh_escrituranube" },
         ],
     });
     $('#Historial thead input').on('input', function () {
