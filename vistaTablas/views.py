@@ -37,9 +37,9 @@ def autenticacion(request):
 
 @login_required(login_url='autenticacion')
 def historial(request):
-    #print("Ingreso historial")
+    print("Ingreso historial")
     if request.method == "POST" and request.POST.get("Comando") == "TablaHistorial":
-        #print("Ingreso TablaHistorial")
+        print("Ingreso TablaHistorial")
         min = request.POST.get("min")
         max = request.POST.get("max")
         draw = int(request.POST.get('draw', 0))
@@ -86,21 +86,21 @@ def historial(request):
             "recordsFiltered": total_records,
             "data": data
         }
-        #print(response)
+        print(response)
         return JsonResponse(response)
     elif request.method == "GET" and request.GET.get("Comando") == "DescargarExcel":
-        #print("Descargar Excel")
+        print("Descargar Excel")
         min = request.GET.get('FechaInicial')
         max = request.GET.get('FechaFinal')
         search_value = request.GET.get('Search', '')
         queryset = models.dataSalud.objects.order_by('-id')
-        #print('0')
-        #print("1")
+        print('0')
+        print("1")
         if min != "" and max != "":
             queryset = queryset.filter(
                 fh_lecturamaquina__range=(min, max)).order_by('-id')
-            #print("2")
-        #print(search_value)
+            print("2")
+        print(search_value)
         if search_value != '':
            queryset = queryset.filter(
                 Q(id__icontains=search_value) |
@@ -112,33 +112,33 @@ def historial(request):
                 Q(fh_lecturamaquina__icontains=search_value) |
                 Q(fh_escrituranube__icontains=search_value) 
             ).order_by('-fh_lecturamaquina', '-id')
-        #print("3")
+        print("3")
         total_records = queryset.count() + 1
         wb = openpyxl.Workbook()
         ws = wb.active
-        #print("4")
-        #print(total_records)
+        print("4")
+        print(total_records)
         #print(queryset)
-        #print("4r")
+        print("4r")
         ws.append(['#', 'id_empresa', 'Cargadora', 'id_dispositivo', 'id_parametro','valor_parametro', 'fh_lecturamaquina', 'fh_escrituranube'])
         #ws.append([str(total_records), str(queryset[0].id_empresa), str(queryset[0].Cargadora), str(queryset[0].id_dispositivo), str(queryset[0].id_parametro), str(queryset[0].valor_parametro), str(queryset[0].fh_lecturamaquina),str(queryset[0].fh_escrituranube)]) 
         #wb.save("test.xlsx")
         #wb.close()
         for item in queryset:
-            #print(item.id_empresa)
+            print(item.id_empresa)
             total_records -= 1
             ws.append([str(total_records), str(item.id_empresa), str(item.Cargadora), str(item.id_dispositivo), str(item.id_parametro), str(item.valor_parametro), str(item.fh_lecturamaquina),str(item.fh_escrituranube)]) 
             #ws.append([str(total_records), item.id_empresa, item.Cargadora, item.id_dispositivo, item.id_parametro, item.valor_parametro, item.fh_lecturamaquina,item.fh_escrituranube])
         #print(ws)
         response = HttpResponse(content_type='application/ms-excel')
-        #print("5")
+        print("5")
         response['Content-Disposition'] = 'attachment; filename="Historial_data.xlsx"'
-        #print("6")
+        print("6")
         #print(response['content-Disposition'])
         #print(response)
         wb.save(response)
         #wb.close()
-        #print("7")
+        print("7")
         return response
         
     data = models.dataSalud.objects.all()
