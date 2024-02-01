@@ -37,7 +37,7 @@ class scoopsaludViewSet(ModelViewSet):
             return JsonResponse({'envio': 'Error'}, status=500)
 
         try:
-            if(not(datos["id_empresa"])):
+            if(not(datos["idEmpresa"])):
                 return JsonResponse({'envio': 'Error'}, status=500)
         except:
             return JsonResponse({'envio': 'Error'}, status=500)
@@ -49,16 +49,16 @@ class scoopsaludViewSet(ModelViewSet):
             return JsonResponse({'envio': 'Error'}, status=500)
 
         try:
-            if(not(datos["id_dispositivo"])):
+            if(not(datos["idDispositivo"])):
                 return JsonResponse({'envio': 'Error'}, status=500)
         except:
             return JsonResponse({'envio': 'Error'}, status=500)
 
         
         data = datos["registro"]
-        idEmpresa = datos["id_empresa"]
+        idEmpresa = datos["idEmpresa"]
         cargadora = datos["Cargadora"]
-        idDispositivo = datos["id_dispositivo"]
+        idDispositivo = datos["idDispositivo"]
         for i in data:
             #print(i)
             nuevoRegistro = models.dataSalud()
